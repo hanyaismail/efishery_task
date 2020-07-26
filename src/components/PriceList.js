@@ -1,37 +1,18 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import { Table } from './Table';
 import { Card } from './Card';
 
 const PriceList = () => {
-  const data = [
-    {
-      uuid: "8a23fcab-ef67-48b8-8ba1-7055ea91ea3b",
-      komoditas: "Ikan Tunaa",
-      area_provinsi: "JAWA TIMUR",
-      area_kota: "SURABAYA 1",
-      size: "90",
-      price: "20000",
-      tgl_parsed: "Wed Jun 03 11:32:48 GMT+07:00 2020",
-    },
-    {
-      uuid: "8a23fcab-ef67-48b8-8ba1-7055ea91ea3b",
-      komoditas: "Ikan Tunaa",
-      area_provinsi: "JAWA TIMUR",
-      area_kota: "SURABAYA 1",
-      size: "90",
-      price: "20000",
-      tgl_parsed: "Wed Jun 03 11:32:48 GMT+07:00 2020",
-    },
-    {
-      uuid: "8a23fcab-ef67-48b8-8ba1-7055ea91ea3b",
-      komoditas: "Ikan Tunaa",
-      area_provinsi: "JAWA TIMUR",
-      area_kota: "SURABAYA 1",
-      size: "90",
-      price: "20000",
-      tgl_parsed: "Wed Jun 03 11:32:48 GMT+07:00 2020",
-    }
-  ];
+
+  const { isLoading, error, data: datax } = useQuery('repoData', () =>
+    fetch('https://stein.efishery.com/v1/storages/5e1edf521073e315924ceab4/list').then(res =>
+      res.json()
+    )
+  );
+  console.log(datax)
+
+  const data = (datax || []).filter(item => item.uuid !== null).slice(0, 20);
 
   const columns = [
     {
