@@ -1,0 +1,23 @@
+.wrapper {
+  // min-height: calc(100vh - 4rem);
+  // overflow-y:auto;
+  // position:absolute;
+  // top: 0;
+  // right: 0;
+  // bottom: 0;
+  // left: 0;
+}
+
+.filter {
+  position: fixed;
+}
+
+.table {
+  min-height: calc(100vh - 10rem);
+  max-height: calc(100vh - 10rem);
+  overflow-y:auto;
+}
+
+.pagination {
+  border-top: .01rem solid #eee;
+}

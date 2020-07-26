@@ -1,23 +1,10 @@
 import React, { useMemo } from 'react';
 import Modal from 'react-modal';
 import JsonToForm from 'json-reactform';
-import { useQuery } from 'react-query';
 
 Modal.setAppElement('#root');
 
-export const FilterModal = ({isModalOpen, onApplyFilter, onResetFilter, onClose}) => {
-
-  const { isLoading: loadingArea, data: dataArea } = useQuery('area', () => {
-    return fetch('https://stein.efishery.com/v1/storages/5e1edf521073e315924ceab4/option_area').then(res =>
-      res.json()
-    )
-  });
-
-  const { isLoading: loadingSize, data: dataSize } = useQuery('size', () => {
-    return fetch('https://stein.efishery.com/v1/storages/5e1edf521073e315924ceab4/option_size').then(res =>
-      res.json()
-    )
-  });
+export const FilterModal = ({isModalOpen, onApplyFilter, onClose, dataArea, dataSize}) => {
 
   const model = useMemo(()=> ({
     Komoditas: {
@@ -25,14 +12,14 @@ export const FilterModal = ({isModalOpen, onApplyFilter, onResetFilter, onClose}
     },
     Area: {
       type: "select",
-      options: (dataArea || []).map(item => ({
+      options: (dataArea || [{ value: 'loading', label: 'Loading...' }]).map(item => ({
         value: item,
         label: `${item.city ? item.city + ', ' : ''}${item.province}`,
       })),
     },
     Ukuran: {
       type: "select",
-      options: (dataSize || []).map(({size}) => ({
+      options: (dataSize || [{ value: 'loading', label: 'Loading...' }]).map(({size}) => ({
         value: size,
         label: size,
       })),
@@ -44,12 +31,11 @@ export const FilterModal = ({isModalOpen, onApplyFilter, onResetFilter, onClose}
       type: "submit",
     }
   }), [dataArea, dataSize]);
-  
+
   return (
     <Modal isOpen={isModalOpen}>
       <span onClick={onClose}>close</span>
       <JsonToForm model={model} onSubmit={onApplyFilter}/>
-      <button onClick={onResetFilter}>Reset</button>
     </Modal>
   )
 }

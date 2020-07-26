@@ -6,7 +6,9 @@ export const Layout = ({children}) => {
   return (
     <div className="layout">
       <TopBar />
-      {children}
+      <div className="main">
+        {children}
+      </div>
     </div>
   )
 }

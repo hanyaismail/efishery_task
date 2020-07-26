@@ -1,6 +1,6 @@
 table { 
 	width: 700px; 
-	border-collapse: collapse; 
+	// border-collapse: collapse; 
 }
 
 /* Zebra striping */
@@ -11,20 +11,26 @@ table {
 th { 
 	background: #3498db; 
 	color: white; 
-	font-weight: bold; 
+  font-weight: bold;
+  position: sticky;
+  top: 0;
 }
 
 td, th { 
 	padding: 10px; 
 	border-bottom: 1px solid #ccc; 
 	text-align: left; 
-	font-size: 0.7rem;
+	font-size: 0.8rem;
+}
+
+tr:hover td {
+  background: #eee;
 }
 
 @media (min-width: 768px) {
   table { 
     width: 100%; 
-    border-collapse: collapse; 
+    // border-collapse: collapse; 
   }
 
   td, th { 
