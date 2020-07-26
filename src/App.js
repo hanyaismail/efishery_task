@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from './components/Layout';
-import PriceList from './components/PriceList';
+import { Layout } from './components/Layout';
+import { PriceList } from './components/PriceList';
 
 function App() {
   return (
