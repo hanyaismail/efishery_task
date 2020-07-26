@@ -1,11 +1,13 @@
 import React from 'react';
-import {TopBar} from './TopBar';
+import { TopBar } from './TopBar';
 
 const Layout = ({children}) => {
   return (
     <div>
       <TopBar />
-      {children}
+      <div>
+        {children}
+      </div>
     </div>
   )
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import Layout from './components/Layout';
+import PriceList from './components/PriceList';
 
 function App() {
   return (
-    <div className="App">
-      <Layout>
-        <div>Init React App</div>
-      </Layout>
-    </div>
+    <Layout>
+      <PriceList />
+    </Layout>
   );
 }
 
