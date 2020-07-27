@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 import './table.scss';
 
 export const Table = ({columns, data, onRowClick, isLoading, isError}) => {
@@ -9,7 +9,7 @@ export const Table = ({columns, data, onRowClick, isLoading, isError}) => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data, initialState: {hiddenColumns: 'uuid'} });
+  } = useTable({ columns, data, initialState: {hiddenColumns: 'uuid'} }, useSortBy);
 
   return (
     <>
@@ -19,9 +19,25 @@ export const Table = ({columns, data, onRowClick, isLoading, isError}) => {
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
               <th
-                {...column.getHeaderProps()}
+                {...column.getHeaderProps(column.getSortByToggleProps())}
               >
                 {column.render('Header')}
+                {/* {column.isSorted ? column.isSortedDesc ? (
+                  <span className="material-icons">
+                    keyboard_arrow_down
+                  </span>
+                ) : (
+                  <span className="material-icons">
+                    keyboard_arrow_up
+                  </span>
+                ) : null} */}
+                <span>
+                  {column.isSorted
+                    ? column.isSortedDesc
+                      ? ' 🔽'
+                      : ' 🔼'
+                    : ''}
+                </span>
               </th>
             ))}
           </tr>

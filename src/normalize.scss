@@ -99,7 +99,7 @@ html {
         font-size: 100%; // 1
     }
 		background: $background;
-		color: $color;
+    color: $color;
     -webkit-text-size-adjust: 100%; // 2
     -ms-text-size-adjust: 100%; // 2
 }
@@ -118,7 +118,10 @@ textarea {
 
 body {
     margin: 0;
+    background: $background;
 }
+
+html, body {margin: 0; height: 100%; overflow: hidden}
 
 // =============================================================================
 // Links
