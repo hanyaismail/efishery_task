@@ -42,7 +42,7 @@ export const PriceList = () => {
     setFormOpen(false);
   }
 
-  const { isLoading, error, data: datax } = useQuery(['fishList', { filter }], async (_, { filter: queryFilter }) => {
+  const { isLoading,  data: datax, isError } = useQuery(['fishList', { filter }], async (_, { filter: queryFilter }) => {
     const res = await efisheryApi.getFishList(queryFilter);
     return res
   });
@@ -118,6 +118,8 @@ export const PriceList = () => {
           <div className="table-a">
             {isLoading ? (
               <div className="center-loading">Sedang Memuat ...</div>
+            ) : isError ?(
+              <div className="center-loading">Terjadi Error Saat Memuat Data</div>
             ) : (
               <Table columns={columns} data={data} onRowClick={handleRowClick}/>
             )}

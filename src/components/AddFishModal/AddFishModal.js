@@ -1,12 +1,15 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
-import { Modal } from '../Modal';
 import JsonToForm from 'json-reactform';
 import { useMutation, queryCache } from 'react-query';
+import { Modal } from '../Modal';
+import { AlertMessage } from '../AlertMessage';
 import { efisheryApi } from '../../services';
 
 export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => {
+
+  const [isSubmitError, setSubmitError] = useState(false);
 
   const addFish = ({ payload }) => efisheryApi.addFish([payload]);
 
@@ -14,10 +17,14 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
     onSuccess: () => {
       queryCache.invalidateQueries('fishList');
       onSubmitSuccess();
+    },
+    onError: () => {
+      setSubmitError(true);
     }
   });
 
   const handleSubmit = async params => {
+    setSubmitError(false);
     const payload = {
       uuid: uuidv4(),
       komoditas: params.Komoditas,
@@ -65,6 +72,9 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
 
   return (
     <Modal onClose={onClose} title="Tambah Daftar">
+      {isSubmitError && (
+        <AlertMessage message="Terjadi Error Saat Submit Data"/>
+      )}
       <JsonToForm model={model} onSubmit={handleSubmit}/>
     </Modal>
   )
