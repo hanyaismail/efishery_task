@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from '../Modal';
+import { Modal } from '../../uikit/Modal';
 import './detailviewmodal.scss';
 
 export const DetailViewModal = ({data, onClose}) => {

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Modal } from '../Modal';
+import { Modal } from '../../uikit/Modal';
 import JsonToForm from 'json-reactform';
 
 export const FilterModal = ({onApplyFilter, onClose, dataArea, dataSize}) => {

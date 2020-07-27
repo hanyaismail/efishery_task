@@ -6,9 +6,6 @@
 
 .list-header {
   flex-basis: 10%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 90%;
   margin: auto;
 }
@@ -20,39 +17,7 @@
 
 .pagination-content {
   flex-basis: 9%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   width: 90%;
   margin: auto;
   border-top: 1px solid #ccc;
-}
-
-.list-title {
-  font-size: 1.2rem;
-}
-
-.center-loading {
-  text-align: center;
-}
-
-.pagination-button {
-  border: none;
-  background: greenyellow;
-  height: 2rem;
-  margin-left: .6rem;
-  border-radius: .2rem;
-  padding: .25rem;
-}
-
-.btn {
-  font-size: .8rem !important;
-  padding: .2rem;
-}
-
-@media (min-width: 768px) {
-  .list-title {
-    margin-left: -3rem;
-    font-size: 2rem;
-  }
 }

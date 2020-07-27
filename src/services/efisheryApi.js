@@ -40,7 +40,7 @@ class EfisheryApi {
 
   async addFish(payload) {
     try {
-      const res = await this.endPoint.post('/lisst', payload);
+      const res = await this.endPoint.post('/list', payload);
       return res.data;
     } catch (err) {
       throw new Error(err);

@@ -3,8 +3,8 @@ import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import JsonToForm from 'json-reactform';
 import { useMutation, queryCache } from 'react-query';
-import { Modal } from '../Modal';
-import { AlertMessage } from '../AlertMessage';
+import { Modal } from '../../uikit/Modal';
+import { AlertMessage } from '../../uikit/AlertMessage';
 import { efisheryApi } from '../../services';
 
 export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => {

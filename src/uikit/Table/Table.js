@@ -2,7 +2,7 @@ import React from 'react';
 import { useTable } from 'react-table';
 import './table.scss';
 
-export const Table = ({columns, data, onRowClick}) => {
+export const Table = ({columns, data, onRowClick, isLoading, isError}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -12,6 +12,7 @@ export const Table = ({columns, data, onRowClick}) => {
   } = useTable({ columns, data, initialState: {hiddenColumns: 'uuid'} });
 
   return (
+    <>
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
@@ -45,5 +46,13 @@ export const Table = ({columns, data, onRowClick}) => {
         })}
       </tbody>
     </table>
+    {isLoading ? (
+      <div className="center-loading">Sedang Memuat ...</div>
+    ) : isError ? (
+      <div className="center-loading">Terjadi Error Saat Memuat Data</div>
+    ) : !data.length ? (
+      <div className="center-loading">Data Tidak Ditemukan</div>
+    ) : null} 
+    </>
   )
 }

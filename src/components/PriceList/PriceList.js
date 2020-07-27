@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { efisheryApi } from '../../services';
-import { Table } from '../Table';
-import { Card } from '../Card';
+import { Table } from '../../uikit/Table';
+import { Card } from '../../uikit/Card';
+import { Pagination } from '../../uikit/Pagination';
 import { DetailViewModal } from '../DetailViewModal';
 import { FilterModal } from '../FilterModal';
 import { AddFishModal } from '../AddFishModal';
+import { PriceListHeader } from '../PriceListHeader';
 import './pricelist.scss';
 
 export const PriceList = () => {
@@ -102,44 +104,30 @@ export const PriceList = () => {
       <Card>
         <div className="wrapper">
           <div className="list-header">
-            <div className="list-title">Daftar Harga</div>
-            <div className="list-action">
-              <button className="pagination-button" onClick={() => setFormOpen(true)}>
-                <span class="material-icons">add</span>
-              </button>
-              <button className="pagination-button" onClick={() => setFilterOpen(true)}>
-                <span class="material-icons">search</span>
-              </button>
-              <button className="pagination-button" onClick={handleResetFilter}>
-                <span class="material-icons">refresh</span>
-              </button>
-            </div>
+            <PriceListHeader
+              onAdd={() => setFormOpen(true)}
+              onSearch={() => setFilterOpen(true)}
+              onReset={handleResetFilter}
+            />
           </div>
           <div className="table-a">
-            {isLoading ? (
-              <div className="center-loading">Sedang Memuat ...</div>
-            ) : isError ?(
-              <div className="center-loading">Terjadi Error Saat Memuat Data</div>
-            ) : (
-              <Table columns={columns} data={data} onRowClick={handleRowClick}/>
-            )}
+            <Table
+              columns={columns}
+              data={data}
+              onRowClick={handleRowClick}
+              isLoading={isLoading}
+              isError={isError}
+            />
           </div>
           <div className="pagination-content">
-            <div>Halaman: {page}/{totalPage}</div>
-            <button 
-              disabled={isLoading || (page === 1)}
-              className="pagination-button"
-              onClick={() => setPage(prev => prev - 1)}
-            >
-              <span class="material-icons">keyboard_arrow_left</span>
-            </button>
-            <button 
-              disabled={isLoading || (page === totalPage)}
-              className="pagination-button"
-              onClick={() => setPage(prev => prev + 1)}
-            >
-              <span class="material-icons">keyboard_arrow_right</span>
-            </button>
+            <Pagination
+              onNext={() => setPage(prev => prev + 1)}
+              onPrev={() => setPage(prev => prev - 1)}
+              totalPage={totalPage}
+              currentPage={page}
+              disabledNext={isLoading}
+              disabledPrev={isLoading}
+            />
           </div>
         </div>
       </Card>
