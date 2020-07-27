@@ -1,10 +1,8 @@
 import React, { useMemo } from 'react';
-import Modal from 'react-modal';
+import { Modal } from '../Modal';
 import JsonToForm from 'json-reactform';
 
-Modal.setAppElement('#root');
-
-export const FilterModal = ({isModalOpen, onApplyFilter, onClose, dataArea, dataSize}) => {
+export const FilterModal = ({onApplyFilter, onClose, dataArea, dataSize}) => {
 
   const model = useMemo(()=> ({
     Komoditas: {
@@ -33,8 +31,7 @@ export const FilterModal = ({isModalOpen, onApplyFilter, onClose, dataArea, data
   }), [dataArea, dataSize]);
 
   return (
-    <Modal isOpen={isModalOpen}>
-      <span onClick={onClose}>close</span>
+    <Modal onClose={onClose} title="Filter Pencarian">
       <JsonToForm model={model} onSubmit={onApplyFilter}/>
     </Modal>
   )

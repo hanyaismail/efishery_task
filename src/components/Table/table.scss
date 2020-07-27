@@ -1,12 +1,7 @@
 table { 
 	width: 700px; 
-	// border-collapse: collapse; 
+	border-collapse: collapse; 
 }
-
-/* Zebra striping */
-// tr:nth-of-type(odd) { 
-// 	background: #eee; 
-// }
 
 th { 
 	background: #3498db; 
@@ -30,7 +25,7 @@ tr:hover td {
 @media (min-width: 768px) {
   table { 
     width: 100%; 
-    // border-collapse: collapse; 
+    border-collapse: collapse; 
   }
 
   td, th { 

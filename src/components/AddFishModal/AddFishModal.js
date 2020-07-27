@@ -1,21 +1,16 @@
 import React, { useMemo } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
-import Modal from 'react-modal';
+import { Modal } from '../Modal';
 import JsonToForm from 'json-reactform';
 import { useMutation, queryCache } from 'react-query';
 import { efisheryApi } from '../../services';
 
-Modal.setAppElement('#root');
+export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => {
 
-export const AddFishModal = ({isModalOpen, onSubmitSuccess, onClose, dataArea, dataSize}) => {
+  const addFish = ({ payload }) => efisheryApi.addFish([payload]);
 
-  const addFish = ({ payload }) => {
-    console.log('dfs', payload)
-    return efisheryApi.addFish([payload])
-  };
-
-  const [ mutate ] = useMutation(addFish, {
+  const [ mutate, { isLoading } ] = useMutation(addFish, {
     onSuccess: () => {
       queryCache.invalidateQueries('fishList');
       onSubmitSuccess();
@@ -64,14 +59,14 @@ export const AddFishModal = ({isModalOpen, onSubmitSuccess, onClose, dataArea, d
       type: "number",
       required: true,
     },
-    "Submit": {
+    [isLoading ? "Tunggu Sebentar" : "Submit"]: {
       type: "submit",
+      disabled: isLoading,
     }
-  }), [dataArea, dataSize]);
+  }), [dataArea, dataSize, isLoading]);
 
   return (
-    <Modal isOpen={isModalOpen}>
-      <span onClick={onClose}>close</span>
+    <Modal onClose={onClose} title="Tambah Daftar">
       <JsonToForm model={model} onSubmit={handleSubmit}/>
     </Modal>
   )
