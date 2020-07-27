@@ -3,16 +3,22 @@ import { useQuery } from 'react-query';
 import { efisheryApi } from '../../services';
 import { Table } from '../Table';
 import { Card } from '../Card';
+import { DetailViewModal } from '../DetailViewModal';
 import { FilterModal } from '../FilterModal';
 import { AddFishModal } from '../AddFishModal';
 import './pricelist.scss';
 
 export const PriceList = () => {
+  const [detailView, setDetailView] = useState({modalOpen: false, data: null});
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isFormOpen, setFormOpen] = useState(false);
   const [filter, setFilter] = useState(null);
   const [page, setPage] = useState(1);
   const [totalShow] = useState(20);
+
+  const handleRowClick = (data) => {
+    setDetailView({modalOpen: true, data});
+  }
 
   const handleApplyFilter = params => {
     setFilterOpen(false)
@@ -94,30 +100,30 @@ export const PriceList = () => {
   return (
     <>
       <Card>
-        <div className="list-header">
-          <div className="list-title">Daftar Harga</div>
-          <div className="list-action">
-            <button className="pagination-button" onClick={() => setFormOpen(true)}>
-              <span class="material-icons">add</span>
-            </button>
-            <button className="pagination-button" onClick={() => setFilterOpen(true)}>
-              <span class="material-icons">search</span>
-            </button>
-            <button className="pagination-button" onClick={handleResetFilter}>
-              <span class="material-icons">refresh</span>
-            </button>
+        <div className="wrapper">
+          <div className="list-header">
+            <div className="list-title">Daftar Harga</div>
+            <div className="list-action">
+              <button className="pagination-button" onClick={() => setFormOpen(true)}>
+                <span class="material-icons">add</span>
+              </button>
+              <button className="pagination-button" onClick={() => setFilterOpen(true)}>
+                <span class="material-icons">search</span>
+              </button>
+              <button className="pagination-button" onClick={handleResetFilter}>
+                <span class="material-icons">refresh</span>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="table-a">
-          {isLoading ? (
-            <div className="center-loading">Sedang Memuat ...</div>
-          ) : (
-            <Table columns={columns} data={data}/>
-          )}
-        </div>
-        <div className="pagination">
+          <div className="table-a">
+            {isLoading ? (
+              <div className="center-loading">Sedang Memuat ...</div>
+            ) : (
+              <Table columns={columns} data={data} onRowClick={handleRowClick}/>
+            )}
+          </div>
           <div className="pagination-content">
-            <span>Halaman: {page}/{totalPage}</span>
+            <div>Halaman: {page}/{totalPage}</div>
             <button 
               disabled={isLoading || (page === 1)}
               className="pagination-button"
@@ -135,6 +141,12 @@ export const PriceList = () => {
           </div>
         </div>
       </Card>
+      {detailView.modalOpen && (
+        <DetailViewModal
+          onClose={() => setDetailView({modalOpen: false, data: null})}
+          data={detailView.data}
+        />
+      )}
       {isFilterOpen && (
         <FilterModal
           onClose={() => setFilterOpen(false)}

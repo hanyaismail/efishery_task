@@ -4,7 +4,7 @@ import './topbar.scss';
 export const TopBar = () => {
   return (
     <div className="top-bar">
-      <div>Ismail</div>
+      <div className="user-profile-a">Ismail</div>
     </div>
   )
 }

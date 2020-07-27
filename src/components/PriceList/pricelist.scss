@@ -1,48 +1,48 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 4.3rem);
+}
+
 .list-header {
-  height: 4rem;
+  flex-basis: 10%;
   display: flex;
   justify-content: space-between;
-  vertical-align: center;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+}
+
+.table-a {
+  flex-basis: 81%;
+  overflow-y:auto;
+}
+
+.pagination-content {
+  flex-basis: 9%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  border-top: 1px solid #ccc;
 }
 
 .list-title {
-  margin-left: 1rem;
-  margin-top: 1rem;
   font-size: 1.2rem;
-}
-
-.list-action {
-  margin-top: 1rem;
-  margin-right: .3rem;
 }
 
 .center-loading {
   text-align: center;
 }
 
-.table-a {
-  height: calc(100vh - 11.5rem);
-  overflow-y:auto;
-}
-
-.pagination {
-  border-top: .05rem solid #ccc;
-  height: 3.1rem;
-  text-align: center;
-}
-
-.pagination-content {
-  position: absolute;
-  right: .3rem;
-  margin-top: .5rem;
-}
-
 .pagination-button {
   border: none;
   background: greenyellow;
   height: 2rem;
-  margin: 0 .3rem;
+  margin-left: .6rem;
   border-radius: .2rem;
+  padding: .25rem;
 }
 
 .btn {
@@ -52,17 +52,7 @@
 
 @media (min-width: 768px) {
   .list-title {
-    margin-left: 1rem;
-    margin-top: .3rem;
+    margin-left: -3rem;
     font-size: 2rem;
-  }
-
-  .pagination-content, .list-action {
-    position: absolute;
-    right: 5rem;
-  }
-
-  .btn {
-    font-size: 1rem !important;
   }
 }

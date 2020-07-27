@@ -18,7 +18,6 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
   });
 
   const handleSubmit = async params => {
-    console.log("submit", params);
     const payload = {
       uuid: uuidv4(),
       komoditas: params.Komoditas,
@@ -30,7 +29,6 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
       timestamp: moment().valueOf(),
     }
 
-    console.log('payload', payload);
     await mutate({ payload });
   }
 

@@ -1,0 +1,1 @@
+export { DetailViewModal } from './DetailViewModal';

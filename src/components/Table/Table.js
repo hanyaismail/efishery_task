@@ -2,7 +2,7 @@ import React from 'react';
 import { useTable } from 'react-table';
 import './table.scss';
 
-export const Table = ({columns, data}) => {
+export const Table = ({columns, data, onRowClick}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -30,7 +30,7 @@ export const Table = ({columns, data}) => {
         {rows.map(row => {
           prepareRow(row)
           return (
-            <tr className="trow" {...row.getRowProps({onClick: () => console.log(row.values)})}>
+            <tr className="trow" {...row.getRowProps({onClick: () => onRowClick(row.values)})}>
               {row.cells.map(cell => {
                 return (
                   <td
