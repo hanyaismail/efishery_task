@@ -2,29 +2,41 @@ import React, { useState, useMemo } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import JsonToForm from 'json-reactform';
-import { useMutation, queryCache } from 'react-query';
+import { useMutation } from 'react-query';
 import { Modal } from '../../uikit/Modal';
 import { AlertMessage } from '../../uikit/AlertMessage';
 import { efisheryApi } from '../../services';
 
 export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => {
 
-  const [isSubmitError, setSubmitError] = useState(false);
+  const [submitMsg, setSubmitMsg] = useState({
+    openMsg: false,
+    msgType: null,
+    message: null,
+  });
 
   const addFish = ({ payload }) => efisheryApi.addFish([payload]);
 
   const [ mutate, { isLoading } ] = useMutation(addFish, {
     onSuccess: () => {
-      queryCache.invalidateQueries('fishList');
       onSubmitSuccess();
+      setSubmitMsg({
+        openMsg: true,
+        msgType: 'success',
+        message: 'Submit Data Berhasil',
+      });
     },
     onError: () => {
-      setSubmitError(true);
+      setSubmitMsg({
+        openMsg: true,
+        msgType: 'danger',
+        message: 'Terjadi Kesalahan Saat Submit Data',
+      });
     }
   });
 
   const handleSubmit = async params => {
-    setSubmitError(false);
+    setSubmitMsg({openMsg: false, msgType: null, message: null});
     const payload = {
       uuid: uuidv4(),
       komoditas: params.Komoditas,
@@ -42,11 +54,12 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
   const model = useMemo(()=> ({
     Komoditas: {
       type: "text",
+      placeholder: "Masukkan nama komoditas",
       required: true,
     },
     Area: {
       type: "select",
-      options: (dataArea || [{ value: 'loading', label: 'Loading...' }]).map(item => ({
+      options: (dataArea || []).map(item => ({
         value: item,
         label: `${item.city ? item.city + ', ' : ''}${item.province}`,
       })),
@@ -54,7 +67,7 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
     },
     Ukuran: {
       type: "select",
-      options: (dataSize || [{ value: 'loading', label: 'Loading...' }]).map(({size}) => ({
+      options: (dataSize || []).map(({size}) => ({
         value: size,
         label: size,
       })),
@@ -62,6 +75,7 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
     },
     Harga: {
       type: "number",
+      placeholder: "Masukkan harga",
       required: true,
     },
     [isLoading ? "Tunggu Sebentar" : "Submit"]: {
@@ -72,8 +86,8 @@ export const AddFishModal = ({onSubmitSuccess, onClose, dataArea, dataSize}) => 
 
   return (
     <Modal onClose={onClose} title="Tambah Daftar">
-      {isSubmitError && (
-        <AlertMessage message="Terjadi Error Saat Submit Data"/>
+      {submitMsg.openMsg && (
+        <AlertMessage type={submitMsg.msgType} message={submitMsg.message}/>
       )}
       <JsonToForm model={model} onSubmit={handleSubmit}/>
     </Modal>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, queryCache } from 'react-query';
+import { thousandsSeparators } from '../../utils';
 import { efisheryApi } from '../../services';
 import { Table } from '../../uikit/Table';
 import { Card } from '../../uikit/Card';
@@ -40,8 +41,7 @@ export const PriceList = () => {
   }
 
   const handleSubmitSuccess = () => {
-    setPage(1);
-    setFormOpen(false);
+    queryCache.invalidateQueries('fishList');
   }
 
   const { isLoading,  data: datax, isError } = useQuery(['fishList', { filter }], async (_, { filter: queryFilter }) => {
@@ -80,22 +80,27 @@ export const PriceList = () => {
     {
       Header: "Provinsi",
       accessor: "area_provinsi",
+      Cell: ({ cell: { value } }) => value || '-',
     },
     {
       Header: "Kota",
       accessor: "area_kota",
+      Cell: ({ cell: { value } }) => value || '-',
     },
     {
       Header: "Ukuran",
       accessor: "size",
+      Cell: ({ cell: { value } }) => value || '-',
     },
     {
       Header: "Harga",
       accessor: "price",
+      Cell: ({ cell: { value } }) => value && thousandsSeparators(value),
     },
     {
       Header: "Tanggal",
       accessor: "tgl_parsed",
+      Cell: ({ cell: { value } }) => value || '-',
     },
   ]
 
