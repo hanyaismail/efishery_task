@@ -1,5 +1,5 @@
 ## Demo
-https://infallible-snyder-3ab24c.netlify.app/
+https://efishery-task-ismail.netlify.app/
 
 ## Installations
 ### Local Development Mode
